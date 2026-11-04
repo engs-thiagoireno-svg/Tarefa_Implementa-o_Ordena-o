@@ -1,56 +1,64 @@
-// Bubble Sort: compara vizinhos e empurra o maior elemento para o fim a cada passada.
+// Bubble Sort: compara vizinhos e leva o maior elemento para o fim a cada rodada.
 // Conta quantas comparações e quantas trocas foram feitas.
-
+// inclui as funções e estruturas comuns
 #include "util.h"
 
+// ordena o vetor v de tamanho n e devolve os contadores
 Contadores bubbleSort(int v[], int n) {
-    // comparações e trocas começam em 0
+    // começa com comparações e trocas iguais a zero
     Contadores c;
 
-    // passada i: ao final dela, os i + 1 maiores elementos já estão no lugar certo
+    // cada rodada i deixa mais um elemento grande no lugar certo
     for (int i = 0; i < n - 1; i++) {
-        // se nenhuma troca acontecer nesta passada, o vetor já está ordenado
+        // anota se esta rodada fez alguma troca
         bool houveTroca = false;
 
-        // j percorre os pares (v[j], v[j + 1]); os últimos i elementos já estão ordenados e ficam de fora
+        // percorre os pares de vizinhos que ainda não estão ordenados
         for (int j = 0; j < n - 1 - i; j++) {
-            // cada comparação entre dois elementos soma 1
+            // soma 1 comparação entre v[j] e v[j + 1]
             c.comparacoes++;
 
-            // se o da esquerda é maior que o da direita, o par está fora de ordem
+            // se o da esquerda é maior, o par está fora de ordem
             if (v[j] > v[j + 1]) {
-                // troca os dois de lugar (a função trocar também soma 1 nas trocas)
+                // troca os dois de lugar e soma 1 nas trocas
                 trocar(v[j], v[j + 1], c);
-                // anota que houve troca nesta passada
+                // anota que houve troca nesta rodada
                 houveTroca = true;
             }
         }
 
-        // passada sem trocas significa vetor ordenado: não precisa continuar
+        // se não houve troca, o vetor já está ordenado e pode parar
         if (!houveTroca) break;
     }
 
-    // devolve o total de comparações e trocas
+    // devolve os contadores
     return c;
 }
 
+// programa principal que testa o Bubble Sort
 int main() {
-    // vetor de teste e quantidade de elementos
+    // vetor de teste
     int v[] = {5, 2, 9, 1, 6, 3};
+    // quantidade de elementos do vetor
     int n = 6;
 
-    // mostra o vetor antes de ordenar
+    // mostra o texto da entrada
     cout << "Entrada: ";
+    // mostra o vetor antes de ordenar
     imprimir(v, n);
 
     // ordena o vetor e guarda os contadores
     Contadores c = bubbleSort(v, n);
 
-    // mostra o vetor ordenado e os contadores
+    // mostra o texto da saída
     cout << "Saida:   ";
+    // mostra o vetor depois de ordenar
     imprimir(v, n);
+    // mostra o total de comparações
     cout << "Comparacoes: " << c.comparacoes << endl;
+    // mostra o total de trocas
     cout << "Trocas: " << c.trocas << endl;
 
+    // termina o programa sem erro
     return 0;
 }
